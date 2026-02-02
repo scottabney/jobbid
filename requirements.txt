@@ -3,7 +3,7 @@ Flask==3.0.0
 Werkzeug==3.0.1
 
 # Image processing and AI
-Pillow==10.1.0
+Pillow==10.3.0
 openai==1.6.1
 
 # Document generation
