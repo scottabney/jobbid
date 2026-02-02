@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block title %}Bid Generated - Job Bid Generator{% endblock %}
+
+{% block content %}
+<div class="page-header success-header">
+    <h1>✅ Bid Generated Successfully!</h1>
+    <p>Your professional bid document is ready</p>
+</div>
+
+<div class="card result-card">
+    <h2>📊 Bid Summary</h2>
+    
+    <div class="summary-grid">
+        <div class="summary-item">
+            <label>Project:</label>
+            <value>{{ result.analysis.get('image_path', 'N/A') | basename }}</value>
+        </div>
+        
+        <div class="summary-item">
+            <label>Complexity:</label>
+            <value>{{ result.analysis.get('complexity', 'N/A') }}</value>
+        </div>
+        
+        <div class="summary-item">
+            <label>Estimated Hours:</label>
+            <value>{{ result.analysis.get('total_estimated_hours', result.analysis.get('estimated_hours', 'N/A')) }}</value>
+        </div>
+    </div>
+    
+    <div class="materials-section">
+        <h3>Materials Identified:</h3>
+        <div class="tag-list">
+            {% for material in result.analysis.get('materials', []) %}
+                <span class="tag">{{ material }}</span>
+            {% endfor %}
+        </div>
+    </div>
+    
+    <div class="processes-section">
+        <h3>Processes Required:</h3>
+        <div class="tag-list">
+            {% for process in result.analysis.get('processes', []) %}
+                <span class="tag tag-process">{{ process }}</span>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<div class="card pricing-card">
+    <h2>💰 Cost Breakdown</h2>
+    
+    <table class="cost-table">
+        <tr>
+            <td>Materials</td>
+            <td class="amount">${{ "%.2f"|format(result.cost_breakdown.material_cost) }}</td>
+        </tr>
+        <tr>
+            <td>Labor</td>
+            <td class="amount">${{ "%.2f"|format(result.cost_breakdown.labor_cost) }}</td>
+        </tr>
+        <tr>
+            <td>Processes</td>
+            <td class="amount">${{ "%.2f"|format(result.cost_breakdown.process_cost) }}</td>
+        </tr>
+        <tr>
+            <td>Overhead ({{ "%.0f"|format(result.cost_breakdown.overhead_rate * 100) }}%)</td>
+            <td class="amount">${{ "%.2f"|format(result.cost_breakdown.overhead) }}</td>
+        </tr>
+        <tr>
+            <td>Profit ({{ "%.0f"|format(result.cost_breakdown.profit_margin * 100) }}%)</td>
+            <td class="amount">${{ "%.2f"|format(result.cost_breakdown.profit) }}</td>
+        </tr>
+        <tr class="total-row">
+            <td><strong>TOTAL BID PRICE</strong></td>
+            <td class="amount"><strong>${{ "%.2f"|format(result.cost_breakdown.final_price) }}</strong></td>
+        </tr>
+    </table>
+</div>
+
+<div class="actions-section">
+    <a href="{{ url_for('download_bid', filename=bid_filename) }}" class="btn btn-success btn-large">
+        📥 Download Bid PDF
+    </a>
+    <a href="{{ url_for('create_bid') }}" class="btn btn-primary">
+        Create Another Bid
+    </a>
+    <a href="{{ url_for('view_bids') }}" class="btn btn-secondary">
+        View All Bids
+    </a>
+</div>
+
+{% if result.analysis.get('recommendations') %}
+<div class="card">
+    <h2>📋 Analysis Details</h2>
+    <div class="analysis-text">
+        {{ result.analysis.recommendations }}
+    </div>
+</div>
+{% endif %}
+{% endblock %}

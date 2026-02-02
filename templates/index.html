@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Job Bid Generator{% endblock %}
+
+{% block content %}
+<div class="hero">
+    <h1>🏭 Smart Job Bid Generator</h1>
+    <p class="hero-subtitle">AI-Powered Bidding for Metal Welding & Fabrication</p>
+</div>
+
+<div class="features">
+    <div class="feature-card">
+        <div class="feature-icon">📸</div>
+        <h3>Image Analysis</h3>
+        <p>Upload job site photos and let AI analyze the work required</p>
+    </div>
+    
+    <div class="feature-card">
+        <div class="feature-icon">💰</div>
+        <h3>Smart Pricing</h3>
+        <p>Automatic cost calculation based on your custom pricing sheets</p>
+    </div>
+    
+    <div class="feature-card">
+        <div class="feature-icon">📄</div>
+        <h3>Professional Bids</h3>
+        <p>Generate polished, professional bid documents in seconds</p>
+    </div>
+</div>
+
+<div class="card">
+    <h2>📊 Pricing Configuration</h2>
+    <p>Upload your pricing sheet (Excel or CSV) to customize material and labor costs.</p>
+    
+    {% if pricing_summary %}
+    <div class="pricing-info">
+        <p><strong>Current Pricing Data:</strong></p>
+        <ul>
+            <li>Materials: {{ pricing_summary.material_count }} items</li>
+            <li>Labor Positions: {{ pricing_summary.labor_positions|length }}</li>
+            <li>Processes: {{ pricing_summary.processes|length }}</li>
+        </ul>
+    </div>
+    {% endif %}
+    
+    <form action="{{ url_for('upload_pricing') }}" method="post" enctype="multipart/form-data" class="upload-form">
+        <div class="form-group">
+            <label for="pricing_file">Upload Pricing Sheet:</label>
+            <input type="file" id="pricing_file" name="pricing_file" accept=".xlsx,.xls,.csv" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Upload Pricing Sheet</button>
+    </form>
+</div>
+
+<div class="cta-section">
+    <h2>Ready to create a bid?</h2>
+    <a href="{{ url_for('create_bid') }}" class="btn btn-success btn-large">Create New Bid</a>
+</div>
+
+<div class="info-section">
+    <h2>How It Works</h2>
+    <ol class="steps">
+        <li>
+            <strong>Upload Photos:</strong> Take pictures of the job site, materials, or work to be done
+        </li>
+        <li>
+            <strong>AI Analysis:</strong> Our system analyzes images to identify materials, processes, and complexity
+        </li>
+        <li>
+            <strong>Cost Calculation:</strong> Automatic pricing based on your custom rates and industry standards
+        </li>
+        <li>
+            <strong>Generate Bid:</strong> Professional PDF bid document ready to send to clients
+        </li>
+    </ol>
+</div>
+{% endblock %}
