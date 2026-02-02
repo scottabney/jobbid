@@ -1,0 +1,28 @@
+Material,Unit,Price
+Steel,lb,0.75
+Aluminum,lb,2.50
+Stainless Steel,lb,3.00
+Steel Plate 1/4",sheet,120.00
+Steel Plate 1/2",sheet,240.00
+Steel Plate 3/4",sheet,360.00
+Steel Tube 1",ft,8.00
+Steel Tube 2",ft,15.00
+Steel Tube 3",ft,25.00
+Steel Angle 2x2,ft,8.00
+Steel Angle 3x3,ft,12.00
+Steel Channel 4",ft,18.00
+Steel I-Beam 6",ft,35.00
+Round Bar 1",ft,5.00
+Flat Bar 2x1/4,ft,6.00
+Sheet Metal 16ga,sheet,45.00
+Sheet Metal 14ga,sheet,55.00
+Sheet Metal 11ga,sheet,75.00
+Welding Gas,tank,25.00
+Welding Wire,spool,50.00
+Electrodes,box,30.00
+Grinding Discs,box,20.00
+Cut-off Wheels,box,25.00
+Paint/Coating,gallon,45.00
+Primer,gallon,30.00
+Hardware Kit,set,15.00
+Bolts & Fasteners,box,12.00

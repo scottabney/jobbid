@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block title %}Create Bid - Job Bid Generator{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>📝 Create New Bid</h1>
+    <p>Upload job photos and enter project details to generate a professional bid</p>
+</div>
+
+<form action="{{ url_for('create_bid') }}" method="post" enctype="multipart/form-data" class="bid-form">
+    <div class="card">
+        <h2>Project Information</h2>
+        
+        <div class="form-group">
+            <label for="project_name">Project Name *</label>
+            <input type="text" id="project_name" name="project_name" required 
+                   placeholder="e.g., Custom Steel Gate Fabrication">
+        </div>
+        
+        <div class="form-group">
+            <label for="project_description">Project Description (Optional)</label>
+            <textarea id="project_description" name="project_description" rows="4"
+                      placeholder="Additional details about the project..."></textarea>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>Client Information</h2>
+        
+        <div class="form-group">
+            <label for="client_name">Client Name</label>
+            <input type="text" id="client_name" name="client_name" 
+                   placeholder="John Smith">
+        </div>
+        
+        <div class="form-row">
+            <div class="form-group">
+                <label for="client_email">Email</label>
+                <input type="email" id="client_email" name="client_email" 
+                       placeholder="john@example.com">
+            </div>
+            
+            <div class="form-group">
+                <label for="client_phone">Phone</label>
+                <input type="tel" id="client_phone" name="client_phone" 
+                       placeholder="(555) 123-4567">
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="client_address">Address</label>
+            <input type="text" id="client_address" name="client_address" 
+                   placeholder="123 Main St, City, ST 12345">
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>Job Photos *</h2>
+        <p class="help-text">Upload photos of the job site, materials, or work to be done. Multiple images provide better analysis.</p>
+        
+        <div class="form-group">
+            <label for="images">Select Images:</label>
+            <input type="file" id="images" name="images" accept="image/*" multiple required>
+        </div>
+        
+        <div id="image-preview" class="image-preview"></div>
+    </div>
+
+    <div class="form-actions">
+        <button type="submit" class="btn btn-success btn-large">Generate Bid</button>
+        <a href="{{ url_for('index') }}" class="btn btn-secondary">Cancel</a>
+    </div>
+</form>
+
+<script>
+document.getElementById('images').addEventListener('change', function(e) {
+    const preview = document.getElementById('image-preview');
+    preview.innerHTML = '';
+    
+    const files = Array.from(e.target.files);
+    files.forEach(file => {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const div = document.createElement('div');
+            div.className = 'preview-item';
+            div.innerHTML = `
+                <img src="${e.target.result}" alt="Preview">
+                <p>${file.name}</p>
+            `;
+            preview.appendChild(div);
+        };
+        reader.readAsDataURL(file);
+    });
+});
+</script>
+{% endblock %}
